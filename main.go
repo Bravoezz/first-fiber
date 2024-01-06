@@ -12,6 +12,7 @@ import (
 func main() {
 	// db connection
 	db.InitDbConnection()
+	// db.Migrate()
 
 	app := fiber.New(fiber.Config{
 		ErrorHandler: middleware.ErrorMiddleware,

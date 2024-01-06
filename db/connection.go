@@ -3,9 +3,14 @@ package db
 import (
 	"fmt"
 	"log"
+	"os"
 	"sync"
+	"time"
+
+	"github.com/Bravoezz/first-fiber/modules/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var once sync.Once
@@ -23,11 +28,37 @@ func InitDbConnection() {
 	var err error
 
 	once.Do(func() {
-		DB, err = gorm.Open(mysql.Open(uriConnection), &gorm.Config{})
+		DB, err = gorm.Open(mysql.Open(uriConnection), &gorm.Config{ Logger: NewLogger()})
+
 		if err != nil {
 			log.Fatal(err)
-		}else {
+		} else {
 			log.Println("DB Connected")
 		}
 	})
+}
+
+func NewLogger() logger.Interface {
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             time.Second,   // Slow SQL threshold
+			LogLevel:                  logger.Silent, // Log level
+			IgnoreRecordNotFoundError: true,          // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,          // Don't include params in the SQL log
+			Colorful:                  false,         // Disable color
+		},
+	)
+	return newLogger
+}
+
+func Migrate() {
+	err := DB.AutoMigrate(&models.User{}, &models.Task{})
+	if err != nil {
+		fmt.Println("Error en la migracion de modelos")
+		fmt.Println(err.Error())
+		return
+	} else {
+		fmt.Println("Migracion correcta")
+	}
 }
