@@ -7,6 +7,8 @@ import (
 
 type TaskRepository struct{}
 
+func Newrepository() ITaskRepository { return &TaskRepository{} }
+
 func (trp TaskRepository) GetAll() ([]models.Task, error) {
 	var tasks []models.Task
 
@@ -17,3 +19,15 @@ func (trp TaskRepository) GetAll() ([]models.Task, error) {
 
 	return tasks, nil
 }
+
+func (trp TaskRepository) GetById(id int) (models.Task, error) {
+	var task models.Task
+
+	err := db.DB.First(&task,id).Error
+	if err != nil {
+		return models.Task{}, err
+	}
+
+	return task, nil
+}
+

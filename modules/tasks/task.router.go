@@ -26,11 +26,15 @@ type TaskResponse struct {
 //** receive-only	solo reciven
 //** send-only		solo envian
 
-func TaskRouter(router fiber.Router) {
-	var taskController ITaskController
-	taskController = TaskController{taskService: TaskService{taskRepository: TaskRepository{}}}
 
-	router.Get("/all", taskController.GetAllTasks())
+func TaskRouter(router fiber.Router) {
+	// var taskController ITaskController = TaskController{taskService: TaskService{taskRepository: TaskRepository{}}}
+	taskRepository := Newrepository()
+	taskService := NewService(taskRepository)
+	taskController := NewController(taskService)
+
+	router.Get("/all", taskController.GetAllTasks)
+	router.Get("/:id", taskController.GetTaskById)
 	
 	// aqui se usar un chanel de tipo bidireccional
 	router.Get("/go-routine", func (c *fiber.Ctx) error {

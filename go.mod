@@ -3,6 +3,7 @@ module github.com/Bravoezz/first-fiber
 go 1.21.1
 
 require (
+	github.com/goccy/go-json v0.10.2
 	github.com/gofiber/fiber/v2 v2.51.0
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/gorm v1.25.5

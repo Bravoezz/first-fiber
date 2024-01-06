@@ -14,6 +14,8 @@ type Task struct {
 	Status      bool
 	Advance     int
 	UserId      uint
+	User        User `gorm:"foreignKey:UserId"`
+	
 	CreatedAt   time.Time
     UpdatedAt   time.Time
 }

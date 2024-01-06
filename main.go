@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/goccy/go-json"
 )
 
 func main() {
@@ -15,6 +16,8 @@ func main() {
 	// db.Migrate()
 
 	app := fiber.New(fiber.Config{
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
 		ErrorHandler: middleware.ErrorMiddleware,
 	})
 

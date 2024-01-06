@@ -6,13 +6,16 @@ import (
 )
 
 type ITaskController interface {
-	GetAllTasks() (func(c *fiber.Ctx) error)
+	GetAllTasks(c *fiber.Ctx) error
+	GetTaskById(c *fiber.Ctx) error
 }
 
 type ITaskService interface {
 	GetAllTasks() ([]models.Task, error)
+	GetTaskById(id int) (models.Task, error)
 }
 
 type ITaskRepository interface {
 	GetAll() ([]models.Task, error)
+	GetById(id int) (models.Task, error)
 }
