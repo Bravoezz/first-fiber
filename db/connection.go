@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Bravoezz/first-fiber/config"
 	"github.com/Bravoezz/first-fiber/modules/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -18,11 +19,11 @@ var DB *gorm.DB
 
 func InitDbConnection() {
 	var (
-		dbname        = "fiberapi"
-		dbuser        = "root"
-		dbpassword    = "toor"
-		dbhost        = "localhost"
-		dbport        = "3306"
+		dbname        = config.GetEnv("DB_NAME")
+		dbuser        = config.GetEnv("DB_USER")
+		dbpassword    = config.GetEnv("DB_PASSWORD")
+		dbhost        = config.GetEnv("DB_HOST")
+		dbport        = config.GetEnv("DB_PORT")
 		uriConnection = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbuser, dbpassword, dbhost, dbport, dbname)
 	)
 	var err error

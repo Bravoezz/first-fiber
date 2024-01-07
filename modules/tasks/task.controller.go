@@ -2,6 +2,7 @@ package tasks
 
 import (
 	"fmt"
+	"runtime"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,8 @@ func NewController(s ITaskService) ITaskController {
 }
 
 func (tsk TaskController) GetAllTasks(c *fiber.Ctx) error {
+	fmt.Println("Numeros CPUs: ",runtime.NumCPU())	
+
 	tasks, err := tsk.taskService.GetAllTasks()
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
@@ -33,7 +36,7 @@ func (tsk TaskController) GetTaskById(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-
+	
 	task, err := tsk.taskService.GetTaskById(id)
 	if err != nil {
 		return fmt.Errorf("error task ctrll")
