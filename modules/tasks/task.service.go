@@ -2,6 +2,7 @@ package tasks
 
 import "github.com/Bravoezz/first-fiber/modules/models"
 
+
 type TaskService struct {
 	taskRepository ITaskRepository
 }
@@ -12,7 +13,7 @@ func NewService(r ITaskRepository) ITaskService {
 	}
 }
 
-func (tsr TaskService) GetAllTasks() ([]models.Task, error) {
+func (tsr TaskService) GetAllTasks() (*[]models.Task, error) {
 	return tsr.taskRepository.GetAll()
 }
 

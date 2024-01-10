@@ -11,11 +11,11 @@ type ITaskController interface {
 }
 
 type ITaskService interface {
-	GetAllTasks() ([]models.Task, error)
+	GetAllTasks() (*[]models.Task, error)
 	GetTaskById(id int) (models.Task, error)
 }
 
 type ITaskRepository interface {
-	GetAll() ([]models.Task, error)
+	GetAll() (*[]models.Task, error)
 	GetById(id int) (models.Task, error)
 }

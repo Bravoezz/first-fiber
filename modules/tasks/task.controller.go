@@ -27,8 +27,10 @@ func (tsk TaskController) GetAllTasks(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(200).JSON(tasks)
+	// comprobando que la direccion de memoria de slice task en controller sea el mismo que en repository 
+	fmt.Printf("Controller: %p\n", tasks)
 
+	return c.Status(200).JSON(tasks)
 }
 
 func (tsk TaskController) GetTaskById(c *fiber.Ctx) error {
@@ -44,3 +46,6 @@ func (tsk TaskController) GetTaskById(c *fiber.Ctx) error {
 
 	return c.Status(200).JSON(task)
 }
+
+
+
