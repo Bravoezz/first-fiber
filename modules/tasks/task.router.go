@@ -34,6 +34,7 @@ func TaskRouter(router fiber.Router) {
 	taskController := NewController(taskService)
 
 	router.Get("/all", taskController.GetAllTasks)
+	router.Get("/sp", taskController.GetEspecifyTask)
 	router.Get("/:id", taskController.GetTaskById)
 	
 	// aqui se usar un chanel de tipo bidireccional

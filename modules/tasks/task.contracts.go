@@ -8,11 +8,13 @@ import (
 type ITaskController interface {
 	GetAllTasks(c *fiber.Ctx) error
 	GetTaskById(c *fiber.Ctx) error
+	GetEspecifyTask(c *fiber.Ctx) error
 }
 
 type ITaskService interface {
 	GetAllTasks() (*[]models.Task, error)
 	GetTaskById(id int) (models.Task, error)
+	GetEspecifyTask() (*EspecifyTask, error)
 }
 
 type ITaskRepository interface {
