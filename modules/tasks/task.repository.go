@@ -14,7 +14,8 @@ func Newrepository() ITaskRepository { return &TaskRepository{} }
 func (trp TaskRepository) GetAll() (*[]models.Task, error) {
 	var tasks []models.Task
 
-	err := db.DB.Where(&models.Task{UserId: 1}).Find(&tasks).Error
+	// err := db.DB.Where(&models.Task{UserId: 1}).Find(&tasks).Error //! se filtra todos las task de el usuario con id 1
+	err := db.DB.Where(&models.Task{}).Find(&tasks).Error
 	if err != nil {
 		return nil, err
 	}
@@ -30,6 +31,7 @@ func (trp TaskRepository) GetById(id int) (models.Task, error) {
 
 	err := db.DB.First(&task,id).Error
 	if err != nil {
+		fmt.Println("hola", err.Error()) //!en caso de no encontrar devuelve este mensaje en el error -> record not found
 		return models.Task{}, err
 	}
 

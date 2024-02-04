@@ -19,6 +19,10 @@ func NewController(s ITaskService) ITaskController {
 	}
 }
 
+func TaskAllResponse(c *fiber.Ctx,status int,res bool ,data any) error {
+	return c.Status(status).JSON(fiber.Map{ "res": res, "data": data}) 
+}
+
 // GetEspecifyTask implements ITaskController.
 func (tsk TaskController) GetEspecifyTask(c *fiber.Ctx) error {
 	
@@ -28,10 +32,7 @@ func (tsk TaskController) GetEspecifyTask(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(200).JSON(fiber.Map{
-		"res": true,
-		"data": *taskData,
-	})
+	return TaskAllResponse(c,200,true,*taskData)
 }
 
 func (tsk TaskController) GetAllTasks(c *fiber.Ctx) error {
@@ -40,13 +41,13 @@ func (tsk TaskController) GetAllTasks(c *fiber.Ctx) error {
 	tasks, err := tsk.taskService.GetAllTasks()
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
-		return err
+		return TaskAllResponse(c,404,false,struct{}{})
 	}
 
 	// comprobando que la direccion de memoria de slice task en controller sea el mismo que en repository
 	fmt.Printf("Controller: %p\n", tasks)
 
-	return c.Status(200).JSON(tasks)
+	return TaskAllResponse(c,200,true,tasks)
 }
 
 func (tsk TaskController) GetTaskById(c *fiber.Ctx) error {
@@ -57,8 +58,8 @@ func (tsk TaskController) GetTaskById(c *fiber.Ctx) error {
 
 	task, err := tsk.taskService.GetTaskById(id)
 	if err != nil {
-		return fmt.Errorf("error task ctrll")
+		return TaskAllResponse(c,404,false,struct{}{})
 	}
 
-	return c.Status(200).JSON(task)
+	return TaskAllResponse(c,200,true,task)
 }
