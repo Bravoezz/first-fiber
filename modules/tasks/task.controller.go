@@ -19,7 +19,7 @@ func NewController(s ITaskService) ITaskController {
 	}
 }
 
-func TaskAllResponse(c *fiber.Ctx,status int,res bool ,data any) error {
+func TaskAllResponse(c *fiber.Ctx,status int,res bool ,data interface{}) error {
 	return c.Status(status).JSON(fiber.Map{ "res": res, "data": data}) 
 }
 
