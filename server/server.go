@@ -11,7 +11,15 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
-func Start(address string) {
+type Server struct {
+	Port string
+}
+
+func New(prt string) *Server {
+	return &Server{ prt }
+}
+
+func (srv *Server) Start() {
 	app := fiber.New(fiber.Config{
 		JSONEncoder:  json.Marshal,
 		JSONDecoder:  json.Unmarshal,
@@ -29,5 +37,5 @@ func Start(address string) {
 
 	app.Use(recover.New())
 
-	app.Listen(fmt.Sprintf(":%s",address))
+	app.Listen(fmt.Sprintf(":%s",srv.Port))
 }

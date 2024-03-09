@@ -45,9 +45,9 @@ func UserRouter(router fiber.Router) {
 		}
 
 		// Configurar el encabezado para la descarga
-		c.Set("Content-Disposition", fmt.Sprintf("attachment; filename=%s", fileNmae))
-		c.Set("Content-Type", "image/*")
-
+		c.Set(fiber.HeaderContentDisposition, fmt.Sprintf("attachment; filename=%s", fileNmae)) //! "Content-Disposition"
+		c.Set(fiber.HeaderContentType, "image/*") //! "Content-Type"
+		
 		return c.Send(imgBytes)
 	})
 

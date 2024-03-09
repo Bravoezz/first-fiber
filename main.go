@@ -30,5 +30,6 @@ func main() {
         log.Println("El directorio", dir, "ya existe.")
     }
 
-	server.Start("4000")
+    server := server.New("4000")
+    server.Start()
 }
